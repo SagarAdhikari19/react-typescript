@@ -13,44 +13,55 @@ interface RepositoriesState {
 
 interface SearchRepoAction {
 
-    type: 'search_repo';
+    type: ActionType.SEARCH_REPO;
 
 }
 
 interface SearchRepoSucessAction {
 
-    type: 'search_repo_success';
+    type: ActionType.SEARCH_REPO_SUCCESS;
     payload: string[];
 
 
 }
 interface SearchRepoErrorAction {
 
-    type: 'search_repo_error';
+    type: ActionType.SEARCH_REPO_ERROR;
     payload: string;
 
 }
 
 
+type Action =
+    | SearchRepoAction
+    | SearchRepoSucessAction
+    | SearchRepoErrorAction;
+
+
+enum ActionType {
+    SEARCH_REPO = 'search_repo',
+    SEARCH_REPO_SUCCESS = 'search_repo_success',
+    SEARCH_REPO_ERROR = 'search_repo_error'
+}
 
 
 
-const reducer = (state: RepositoriesState, action: | SearchRepoAction | SearchRepoSucessAction | SearchRepoErrorAction): RepositoriesState => {//indicates that the function returns a value of type RepositoriesState.
+const reducer = (state: RepositoriesState, action: Action): RepositoriesState => {//indicates that the function returns a value of type RepositoriesState.
 
 
     switch (action.type) {
 
-        case 'search_repo':
+        case ActionType.SEARCH_REPO:
             return {
                 loading: true, error: null, data: []
 
             }
-        case 'search_repo_success':
+        case ActionType.SEARCH_REPO_SUCCESS:
             return {
                 loading: false, error: null, data: action.payload
             }
 
-        case 'search_repo_error':
+        case ActionType.SEARCH_REPO_ERROR:
             return {
                 loading: false, error: action.payload, data: []
 
